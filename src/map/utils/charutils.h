@@ -65,7 +65,7 @@ const std::vector<std::pair<uint16, uint8>> roeCapacityBonusRecords = {
 
 namespace charutils
 {
-    void LoadExpTable();
+    void LoadExpTables();
     void LoadChar(CCharEntity* PChar);
     void LoadSpells(CCharEntity* PChar);
     void LoadInventory(CCharEntity* PChar);
