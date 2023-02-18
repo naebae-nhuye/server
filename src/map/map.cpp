@@ -254,6 +254,51 @@ int32 do_init(int32 argc, char** argv)
     daily::LoadDailyItems();
     roeutils::UpdateUnityRankings();
 
+    // Exp test harness
+    for (int lvl = 1; lvl < 100; lvl += 5)
+    {
+        for (int chainNumber = 0; chainNumber < 10; chainNumber++)
+        {
+            for (int chainTime = 0; chainTime < 10000; chainTime += 1000)
+            {
+                uint16 oldChainNumber = chainNumber;
+                uint32 oldChainTime = chainTime;
+
+                uint16 newChainNumber = chainNumber;
+                uint32 newChainTime = chainTime;
+
+                float oldExp = 100;
+                float newExp = 100;
+
+                bool oldChainActive = chainNumber % 2;
+                bool newChainActive = chainNumber % 2;
+
+                charutils::OldApplyExpChainBonuses(lvl, oldChainNumber, oldChainTime, oldExp, EMobDifficulty::EvenMatch, oldChainActive);
+                charutils::ApplyExpChainBonuses(lvl, newChainNumber, newChainTime, newExp, EMobDifficulty::EvenMatch, newChainActive);
+
+                if (oldChainNumber != newChainNumber)
+                {
+                    ShowError("chainNumber Mismatch");
+                }
+
+                if (oldChainTime != newChainTime)
+                {
+                    ShowError("chainTime Mismatch");
+                }
+
+                if (!approximatelyEqual(oldExp,newExp))
+                {
+                    ShowError("exp Mismatch");
+                }
+
+                if (oldChainActive != newChainActive)
+                {
+                    ShowError("chainActive Mismatch");
+                }
+            }
+        }
+    }
+
     if (!std::filesystem::exists("./navmeshes/") || std::filesystem::is_empty("./navmeshes/"))
     {
         ShowInfo("./navmeshes/ directory isn't present or is empty");

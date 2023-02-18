@@ -85,6 +85,9 @@ namespace charutils
     uint32 GetBaseExp(uint8 charlvl, uint8 moblvl);
     uint32 GetExpNEXTLevel(uint8 charlvl);
 
+    void OldApplyExpChainBonuses(uint8 mLvl, uint16& chainNumber, uint32& chainTime, float& exp, EMobDifficulty mobCheck, bool& chainactive);
+    void ApplyExpChainBonuses(uint8 mLvl, uint16& chainNumber, uint32& chainTime, float& exp, EMobDifficulty mobCheck, bool& chainactive);
+
     void DelExperiencePoints(CCharEntity* PChar, float retainpct, uint16 forcedXpLoss);
     void DistributeExperiencePoints(CCharEntity* PChar, CMobEntity* PMob);
     void DistributeGil(CCharEntity* PChar, CMobEntity* PMob);

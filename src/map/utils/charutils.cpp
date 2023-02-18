@@ -33,7 +33,6 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include <cstring>
 
 #include "lua/luautils.h"
-#include "lua/luautils.h"
 
 #include "ai/ai_container.h"
 #include "ai/states/attack_state.h"
@@ -42,38 +41,6 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "ai/states/attack_state.h"
 #include "ai/states/item_state.h"
 
-#include "packets/char_abilities.h"
-#include "packets/char_appearance.h"
-#include "packets/char_equip.h"
-#include "packets/char_health.h"
-#include "packets/char_job_extra.h"
-#include "packets/char_jobs.h"
-#include "packets/char_recast.h"
-#include "packets/char_skills.h"
-#include "packets/char_stats.h"
-#include "packets/char_sync.h"
-#include "packets/char_update.h"
-#include "packets/chat_message.h"
-#include "packets/conquest_map.h"
-#include "packets/delivery_box.h"
-#include "packets/inventory_assign.h"
-#include "packets/inventory_finish.h"
-#include "packets/inventory_item.h"
-#include "packets/inventory_modify.h"
-#include "packets/key_items.h"
-#include "packets/linkshell_equip.h"
-#include "packets/menu_jobpoints.h"
-#include "packets/menu_merit.h"
-#include "packets/message_basic.h"
-#include "packets/message_combat.h"
-#include "packets/message_special.h"
-#include "packets/message_standard.h"
-#include "packets/monipulator1.h"
-#include "packets/monipulator2.h"
-#include "packets/quest_mission_log.h"
-#include "packets/roe_sparkupdate.h"
-#include "packets/server_ip.h"
-#include "packets/timer_bar_util.h"
 #include "packets/char_abilities.h"
 #include "packets/char_appearance.h"
 #include "packets/char_equip.h"
@@ -125,7 +92,6 @@ along with this program.  If not, see http://www.gnu.org/licenses/
 #include "treasure_pool.h"
 #include "unitychat.h"
 #include "universal_container.h"
-#include "vana_time.h"
 #include "weapon_skill.h"
 
 #include "entities/automatonentity.h"
@@ -3928,35 +3894,296 @@ namespace charutils
         }
     }
 
-    void ApplyExpChainBonuses(CCharEntity* PMember, float& exp, EMobDifficulty& mobCheck, bool& chainactive)
+    void OldApplyExpChainBonuses(uint8 mLvl, uint16& chainNumber, uint32& chainTime, float& exp, EMobDifficulty mobCheck, bool& chainactive)
+    {
+        if (mobCheck > EMobDifficulty::DecentChallenge)
+        {
+            if (chainTime > 0 || chainTime == 0)
+            {
+                chainactive = true;
+                switch (chainNumber)
+                {
+                    case 0:
+                        exp *= 1.0f;
+                        break;
+                    case 1:
+                        exp *= 1.2f;
+                        break;
+                    case 2:
+                        exp *= 1.25f;
+                        break;
+                    case 3:
+                        exp *= 1.3f;
+                        break;
+                    case 4:
+                        exp *= 1.4f;
+                        break;
+                    case 5:
+                        exp *= 1.5f;
+                        break;
+                    default:
+                        exp *= 1.55f;
+                        break;
+                }
+            }
+            else
+            {
+                if (mLvl <= 10)
+                {
+                    chainTime = 0 + 50000;
+                }
+                else if (mLvl <= 20)
+                {
+                    chainTime = 0 + 100000;
+                }
+                else if (mLvl <= 30)
+                {
+                    chainTime = 0 + 150000;
+                }
+                else if (mLvl <= 40)
+                {
+                    chainTime = 0 + 200000;
+                }
+                else if (mLvl <= 50)
+                {
+                    chainTime = 0 + 250000;
+                }
+                else if (mLvl <= 60)
+                {
+                    chainTime = 0 + 300000;
+                }
+                else
+                {
+                    chainTime = 0 + 360000;
+                }
+                chainNumber = 1;
+            }
+
+            if (chainactive && mLvl <= 10)
+            {
+                switch (chainNumber)
+                {
+                    case 0:
+                        chainTime = 0 + 50000;
+                        break;
+                    case 1:
+                        chainTime = 0 + 40000;
+                        break;
+                    case 2:
+                        chainTime = 0 + 30000;
+                        break;
+                    case 3:
+                        chainTime = 0 + 20000;
+                        break;
+                    case 4:
+                        chainTime = 0 + 10000;
+                        break;
+                    case 5:
+                        chainTime = 0 + 6000;
+                        break;
+                    default:
+                        chainTime = 0 + 2000;
+                        break;
+                }
+            }
+            else if (chainactive && mLvl <= 20)
+            {
+                switch (chainNumber)
+                {
+                    case 0:
+                        chainTime = 0 + 100000;
+                        break;
+                    case 1:
+                        chainTime = 0 + 80000;
+                        break;
+                    case 2:
+                        chainTime = 0 + 60000;
+                        break;
+                    case 3:
+                        chainTime = 0 + 40000;
+                        break;
+                    case 4:
+                        chainTime = 0 + 20000;
+                        break;
+                    case 5:
+                        chainTime = 0 + 8000;
+                        break;
+                    default:
+                        chainTime = 0 + 4000;
+                        break;
+                }
+            }
+            else if (chainactive && mLvl <= 30)
+            {
+                switch (chainNumber)
+                {
+                    case 0:
+                        chainTime = 0 + 150000;
+                        break;
+                    case 1:
+                        chainTime = 0 + 120000;
+                        break;
+                    case 2:
+                        chainTime = 0 + 90000;
+                        break;
+                    case 3:
+                        chainTime = 0 + 60000;
+                        break;
+                    case 4:
+                        chainTime = 0 + 30000;
+                        break;
+                    case 5:
+                        chainTime = 0 + 10000;
+                        break;
+                    default:
+                        chainTime = 0 + 5000;
+                        break;
+                }
+            }
+            else if (chainactive && mLvl <= 40)
+            {
+                switch (chainNumber)
+                {
+                    case 0:
+                        chainTime = 0 + 200000;
+                        break;
+                    case 1:
+                        chainTime = 0 + 160000;
+                        break;
+                    case 2:
+                        chainTime = 0 + 120000;
+                        break;
+                    case 3:
+                        chainTime = 0 + 80000;
+                        break;
+                    case 4:
+                        chainTime = 0 + 40000;
+                        break;
+                    case 5:
+                        chainTime = 0 + 40000;
+                        break;
+                    default:
+                        chainTime = 0 + 30000;
+                        break;
+                }
+            }
+            else if (chainactive && mLvl <= 50)
+            {
+                switch (chainNumber)
+                {
+                    case 0:
+                        chainTime = 0 + 250000;
+                        break;
+                    case 1:
+                        chainTime = 0 + 200000;
+                        break;
+                    case 2:
+                        chainTime = 0 + 150000;
+                        break;
+                    case 3:
+                        chainTime = 0 + 100000;
+                        break;
+                    case 4:
+                        chainTime = 0 + 50000;
+                        break;
+                    case 5:
+                        chainTime = 0 + 50000;
+                        break;
+                    default:
+                        chainTime = 0 + 50000;
+                        break;
+                }
+            }
+            else if (chainactive && mLvl <= 60)
+            {
+                switch (chainNumber)
+                {
+                    case 0:
+                        chainTime = 0 + 300000;
+                        break;
+                    case 1:
+                        chainTime = 0 + 240000;
+                        break;
+                    case 2:
+                        chainTime = 0 + 180000;
+                        break;
+                    case 3:
+                        chainTime = 0 + 120000;
+                        break;
+                    case 4:
+                        chainTime = 0 + 90000;
+                        break;
+                    case 5:
+                        chainTime = 0 + 60000;
+                        break;
+                    default:
+                        chainTime = 0 + 60000;
+                        break;
+                }
+            }
+            else if (chainactive)
+            {
+                switch (chainNumber)
+                {
+                    case 0:
+                        chainTime = 0 + 360000;
+                        break;
+                    case 1:
+                        chainTime = 0 + 300000;
+                        break;
+                    case 2:
+                        chainTime = 0 + 240000;
+                        break;
+                    case 3:
+                        chainTime = 0 + 165000;
+                        break;
+                    case 4:
+                        chainTime = 0 + 105000;
+                        break;
+                    case 5:
+                        chainTime = 0 + 60000;
+                        break;
+                    default:
+                        chainTime = 0 + 60000;
+                        break;
+                }
+            }
+        }
+    }
+
+    void ApplyExpChainBonuses(uint8 mLvl, uint16& chainNumber, uint32& chainTime, float& exp, EMobDifficulty mobCheck, bool& chainactive)
     {
         if (mobCheck <= EMobDifficulty::DecentChallenge)
         {
             return;
         }
 
-        if (PMember->expChain.chainTime > gettick() || PMember->expChain.chainTime == 0)
+        if (chainTime > 0 || chainTime == 0)
         {
             chainactive = true;
         }
         else
         {
-            PMember->expChain.chainNumber = 1;
+            chainNumber = 1;
         }
 
-        auto mainLevel    = PMember->GetMLevel();
+        auto mainLevel    = mLvl;
         auto applyExpMult = 1.00f;
 
         // Loop through the lookup and apply multiplers and times
-        for (auto& [upperLevel, chainNumber, expMultiplier, chainTime] : g_ExpChainValues)
+        for (auto& [upperLevel, pChainNumber, expMultiplier, pChainTime] : g_ExpChainValues)
         {
-            if (mainLevel <= upperLevel && PMember->expChain.chainNumber == chainNumber)
+            if (mainLevel <= upperLevel && chainNumber == pChainNumber)
             {
                 // Save this for later
                 applyExpMult = expMultiplier;
 
                 // Overwrite chainTime value as we find new valid ones
-                PMember->expChain.chainTime = gettick() + chainTime;
+                chainTime = 0 + pChainTime;
+
+                // If we've matched, we've matched at the soonest possible time.
+                // No point in iterating any more.
+                break;
             }
         }
 
@@ -4083,7 +4310,7 @@ namespace charutils
 
                     ApplyPerMonsterExpCap(PMember, exp);
 
-                    ApplyExpChainBonuses(PMember, exp, mobCheck, chainactive);
+                    ApplyExpChainBonuses(PMember->GetMLevel(), PMember->expChain.chainNumber, PMember->expChain.chainTime,  exp, mobCheck, chainactive);
 
                     // pet or companion exp penalty needs to be added here
                     if (distance(PMember->loc.p, PMob->loc.p) > 100)
