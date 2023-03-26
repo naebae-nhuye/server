@@ -241,4 +241,5 @@ xi.settings.main =
     ENM_COOLDOWN                 = 120,   -- Number of hours before a player can obtain same KI for ENMs (default: 5 days)
     FORCE_SPAWN_QM_RESET_TIME    = 300,   -- Number of seconds the ??? remains hidden for after the despawning of the mob it force spawns.
     EQUIP_FROM_OTHER_CONTAINERS  = false, -- true/false. Allows equipping items from Mog Satchel, Sack, and Case. Only possible with the use of client addons.
+    DISABLE_TREASURE_HUNTER_PROC = false, -- true/false. The Treasure Hunter proc system was introduced in the December 2010 update and applies to players using Thief main job, as well as the Ranger job ability Bounty Shot.
 }
