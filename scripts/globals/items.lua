@@ -1087,6 +1087,7 @@ xi.items =
     MOG_KUPON_AW_ABS                = 2802,
     SQUARE_OF_SHAGREEN              = 2824,
     IMPERIAL_TOPAZ                  = 2840,
+    EYE_OF_VERTHANDI                = 2881,
     MILDEWY_INGOT                   = 2886,
     DECAYED_INGOT                   = 2887,
     DRIED_CHIGOE                    = 2891,
