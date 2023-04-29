@@ -2,7 +2,8 @@
 -- Area: Rolanberry Fields
 --   NM: Black Triple Stars
 -----------------------------------
-require("scripts/globals/hunts")
+require('scripts/globals/hunts')
+require('scripts/globals/magian')
 -----------------------------------
 local entity = {}
 

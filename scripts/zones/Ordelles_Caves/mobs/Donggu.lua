@@ -2,8 +2,9 @@
 -- Area: Ordelle's Caves
 --   NM: Donggu
 -----------------------------------
-require("scripts/globals/hunts")
-require("scripts/globals/mobs")
+require('scripts/globals/hunts')
+require('scripts/globals/magian')
+require('scripts/globals/mobs')
 -----------------------------------
 local entity = {}
 
@@ -18,6 +19,7 @@ end
 
 entity.onMobDeath = function(mob, player, optParams)
     xi.hunts.checkHunt(mob, player, 181)
+    xi.magian.onMobDeath(mob, player, optParams, set{ 514 })
 end
 
 return entity

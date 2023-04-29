@@ -1,8 +1,9 @@
 -----------------------------------
 --  Mob: Yacumama
 -----------------------------------
-require("scripts/globals/voidwalker")
-require("scripts/globals/hunts")
+require('scripts/globals/hunts')
+require('scripts/globals/magian')
+require('scripts/globals/voidwalker')
 -----------------------------------
 
 local entity = {}
@@ -29,8 +30,8 @@ end
 
 entity.onMobDeath = function(mob, player, optParams)
     xi.voidwalker.onMobDeath(mob, player, optParams, xi.keyItem.BLUE_ABYSSITE)
-    xi.magian.onMobDeath(mob, player, optParams, set{ 8 })
     xi.hunts.checkHunt(mob, player, 545)
+    xi.magian.onMobDeath(mob, player, optParams, set{ 8, 518, 897 })
 end
 
 return entity

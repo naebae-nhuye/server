@@ -1,9 +1,10 @@
 -----------------------------------
---  VNM: Feurunke
+--  VNM: Feuerunke
 -----------------------------------
-require("scripts/globals/titles")
-require("scripts/globals/voidwalker")
-require("scripts/globals/hunts")
+require('scripts/globals/hunts')
+require('scripts/globals/titles')
+require('scripts/globals/magian')
+require('scripts/globals/voidwalker')
 -----------------------------------
 local entity = {}
 
@@ -29,8 +30,8 @@ end
 
 entity.onMobDeath = function(mob, player, optParams)
     xi.voidwalker.onMobDeath(mob, player, optParams, xi.keyItem.PURPLE_ABYSSITE)
-    xi.magian.onMobDeath(mob, player, optParams, set{ 9 })
     xi.hunts.checkHunt(mob, player, 558)
+    xi.magian.onMobDeath(mob, player, optParams, set{ 9, 519, 898 })
 end
 
 return entity

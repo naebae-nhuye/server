@@ -3,6 +3,7 @@
 --   NM: Serra
 -----------------------------------
 require('scripts/globals/hunts')
+require('scripts/globals/magian')
 -----------------------------------
 local entity = {}
 

@@ -2,13 +2,14 @@
 -- Area: Garlaige Citadel (164)
 --   NM: Hovering Hotpot
 -----------------------------------
-require("scripts/globals/hunts")
+require('scripts/globals/hunts')
+require('scripts/globals/magian')
 -----------------------------------
 local entity = {}
 
 entity.onMobDeath = function(mob, player, optParams)
-    xi.magian.onMobDeath(mob, player, optParams, set{ 7 })
     xi.hunts.checkHunt(mob, player, 301)
+    xi.magian.onMobDeath(mob, player, optParams, set{ 7, 517, 896 })
 end
 
 return entity

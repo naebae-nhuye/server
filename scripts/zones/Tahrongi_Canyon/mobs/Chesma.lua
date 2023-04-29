@@ -1,8 +1,9 @@
 -----------------------------------
 --  VNM: Chesma
 -----------------------------------
-require("scripts/globals/titles")
-require("scripts/globals/voidwalker")
+require('scripts/globals/magian')
+require('scripts/globals/titles')
+require('scripts/globals/voidwalker')
 -----------------------------------
 local entity = {}
 
@@ -28,6 +29,7 @@ end
 
 entity.onMobDeath = function(mob, player, optParams)
     xi.voidwalker.onMobDeath(mob, player, optParams, xi.keyItem.GREY_ABYSSITE)
+    xi.magian.onMobDeath(mob, player, optParams, set{ 1138, 1246, 1354, 1400, 1554, 1646, 1788 })
 end
 
 return entity

@@ -2,8 +2,9 @@
 -- Area: West Sarutabaruta [S]
 --   NM: Ramponneau
 -----------------------------------
-require("scripts/globals/hunts")
-require("scripts/globals/mobs")
+require('scripts/globals/hunts')
+require('scripts/globals/magian')
+require('scripts/globals/mobs')
 -----------------------------------
 local entity = {}
 
@@ -23,6 +24,7 @@ end
 
 entity.onMobDeath = function(mob, player, optParams)
     xi.hunts.checkHunt(mob, player, 519)
+    xi.magian.onMobDeath(mob, player, optParams, set{ 72, 286, 434 })
 end
 
 return entity

@@ -1,9 +1,10 @@
 -----------------------------------
 --  Mob: Capricornus
 -----------------------------------
-require("scripts/globals/voidwalker")
-mixins = { require("scripts/mixins/job_special") }
-require("scripts/globals/hunts")
+require('scripts/globals/hunts')
+require('scripts/globals/magian')
+require('scripts/globals/voidwalker')
+mixins = { require('scripts/mixins/job_special') }
 -----------------------------------
 
 local entity = {}
@@ -31,6 +32,7 @@ end
 entity.onMobDeath = function(mob, player, optParams)
     xi.voidwalker.onMobDeath(mob, player, optParams, xi.keyItem.BLUE_ABYSSITE)
     xi.hunts.checkHunt(mob, player, 546)
+    xi.magian.onMobDeath(mob, player, optParams, set{ 157, 371, 585 })
 end
 
 return entity
