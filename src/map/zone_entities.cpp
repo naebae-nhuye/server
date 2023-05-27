@@ -310,13 +310,13 @@ void CZoneEntities::WeatherChange(WEATHER weather)
             if (PCurrentMob->m_Element == element)
             {
                 PCurrentMob->SetDespawnTime(0s);
-                PCurrentMob->m_AllowRespawn = true;
-                PCurrentMob->Spawn();
+                PCurrentMob->m_CanSpawn = true;
+                PCurrentMob->TrySpawn();
             }
             else
             {
                 PCurrentMob->SetDespawnTime(1s);
-                PCurrentMob->m_AllowRespawn = false;
+                PCurrentMob->m_CanSpawn = false;
             }
         }
         else if (PCurrentMob->m_SpawnType & SPAWNTYPE_FOG)
@@ -324,13 +324,13 @@ void CZoneEntities::WeatherChange(WEATHER weather)
             if (weather == WEATHER_FOG)
             {
                 PCurrentMob->SetDespawnTime(0s);
-                PCurrentMob->m_AllowRespawn = true;
-                PCurrentMob->Spawn();
+                PCurrentMob->m_CanSpawn = true;
+                PCurrentMob->TrySpawn();
             }
             else
             {
                 PCurrentMob->SetDespawnTime(1s);
-                PCurrentMob->m_AllowRespawn = false;
+                PCurrentMob->m_CanSpawn = false;
             }
         }
     }
@@ -1012,7 +1012,7 @@ void CZoneEntities::TOTDChange(TIMETYPE TOTD)
                 if (PMob->m_SpawnType & SPAWNTYPE_ATNIGHT)
                 {
                     PMob->SetDespawnTime(1ms);
-                    PMob->m_AllowRespawn = false;
+                    PMob->m_CanSpawn = false;
                 }
             }
         }
@@ -1028,7 +1028,7 @@ void CZoneEntities::TOTDChange(TIMETYPE TOTD)
                 if (PMob->m_SpawnType & SPAWNTYPE_ATEVENING)
                 {
                     PMob->SetDespawnTime(1ms);
-                    PMob->m_AllowRespawn = false;
+                    PMob->m_CanSpawn = false;
                 }
             }
         }
@@ -1054,8 +1054,7 @@ void CZoneEntities::TOTDChange(TIMETYPE TOTD)
                 if (PMob->m_SpawnType & SPAWNTYPE_ATEVENING)
                 {
                     PMob->SetDespawnTime(0s);
-                    PMob->m_AllowRespawn = true;
-                    PMob->Spawn();
+                    PMob->m_CanSpawn = true;
                 }
             }
         }
@@ -1069,8 +1068,7 @@ void CZoneEntities::TOTDChange(TIMETYPE TOTD)
                 if (PMob->m_SpawnType & SPAWNTYPE_ATNIGHT)
                 {
                     PMob->SetDespawnTime(0s);
-                    PMob->m_AllowRespawn = true;
-                    PMob->Spawn();
+                    PMob->m_CanSpawn = true;
                 }
             }
         }

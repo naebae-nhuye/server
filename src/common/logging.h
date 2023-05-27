@@ -37,6 +37,7 @@
 #include "spdlog/fmt/bundled/core.h"
 #include "spdlog/fmt/bundled/format.h"
 #include "spdlog/fmt/bundled/printf.h"
+#include "spdlog/fmt/bundled/ranges.h"
 #include "spdlog/fmt/fmt.h"
 
 // Forward declaration

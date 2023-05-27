@@ -29,6 +29,7 @@
 class CMobSpellContainer;
 class CMobSpellList;
 class CEnmityContainer;
+class SpawnSlot;
 
 enum SPAWNTYPE
 {
@@ -126,6 +127,10 @@ public:
     bool       CanDeaggro() const;
     time_point GetDespawnTime();
     void       SetDespawnTime(duration _duration);
+    void       SetSpawnSlot(SpawnSlot* sharedSpawn);
+    SpawnSlot* GetSpawnSlot();
+    bool       TrySpawn();
+
     uint32     GetRandomGil();   // returns a random amount of gil
     bool       CanRoamHome();    // is it possible for me to walk back?
     bool       CanRoam();        // check if mob can walk around
@@ -180,7 +185,8 @@ public:
     virtual void FadeOut() override;
     virtual bool isWideScannable() override;
 
-    bool   m_AllowRespawn; // if true, allow respawn
+    bool m_AllowRespawn;   // If true, this mob or another mob in the same slot is allowed to spawn
+    bool m_CanSpawn;       // If true, it can currently spawn (usually based on time of day or weather)
     uint32 m_RespawnTime;  // respawn time
     uint32 m_DropItemTime; // time until monster death animation
 
@@ -273,6 +279,7 @@ private:
     std::unordered_map<int, int16> m_mobModStat;
     std::unordered_map<int, int16> m_mobModStatSave;
     static constexpr float         roam_home_distance{ 60.f };
+    SpawnSlot*                     spawnSlot = nullptr;
 };
 
 #endif
